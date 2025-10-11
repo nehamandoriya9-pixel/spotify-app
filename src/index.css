@@ -1,0 +1,27 @@
+
+@import "tailwindcss";
+
+/* Smooth, Spotify-like scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555; /* gray Spotify style */
+  border-radius: 9999px;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888; /* lighter on hover */
+}
+
+/* Hide scrollbars until hover */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
