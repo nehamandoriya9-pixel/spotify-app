@@ -1,5 +1,5 @@
 
-import footerLinks from "../data/footerLinks";
+import FooterLinks from "../data/FooterLinks";
 
 const Contentfeed = () => {
   
@@ -22,7 +22,7 @@ const Contentfeed = () => {
     {/* <div className="flex bg-red-50"> */}
 
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 p-10 border-t border-gray-700">
-    {footerLinks.map((section, index) => (
+    {FooterLinks.map((section, index) => (
   <div key={index}>
     {section.title && <h3 className="font-bold text-white mb-2">{section.title}</h3>}
     {section.links && (
