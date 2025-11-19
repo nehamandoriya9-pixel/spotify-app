@@ -9,7 +9,7 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import { albumsData } from "./assets/assets";
 import NowPlayingView from "./components/NowPlayingView";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import Signup from "./pages/Signup";
