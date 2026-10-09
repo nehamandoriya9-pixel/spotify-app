@@ -3,9 +3,6 @@ import { useParams } from "react-router-dom";
 import { searchTracks } from "../api/endpoints";
 import { FaPlay, FaPause } from "react-icons/fa";
 
-
-
-
 function SearchPage({ onPlay, currentSong, isPlaying }) {
   const { query } = useParams();
   const [results, setResults] = useState([]);

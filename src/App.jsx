@@ -3,7 +3,7 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import ShowAll from "./pages/ShowAll";
 import Player from "./components/Player";
-import './index.css';
+import "./index.css";
 import Contentfeed from "./components/Contentfeed";
 import { useState } from "react";
 import Navbar from "./components/Navbar";
@@ -14,9 +14,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import Signup from "./pages/Signup";
 import Sidebar from "./components/Sidebar";
-import { Outlet } from 'react-router-dom'
+import { Outlet } from "react-router-dom";
 import SearchPage from "./pages/SearchPage";
-
+import { useLocation } from "react-router-dom";
 
 function App(off) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,8 +32,9 @@ function App(off) {
   const [loopMode, setLoopMode] = useState(off);
   const [isShuffle, setIsShuffle] = useState(false);
   const [history, setHistory] = useState([]);
-
-
+  const location = useLocation();
+  const isContentfeed = location.pathname === "/content-feed";
+  const isSearchpage = location.pathname.startsWith("/search/");
 
   // const getTracks = () => {
   //   let data = fetch("https://v1.nocodeapi.com/nehamandoriya1510151/spotify/bATJhPuDRHqjDUQt/search?q=daku&type=track")
@@ -51,7 +52,6 @@ function App(off) {
       // console.log(currentSong)
       setIsPlaying(true);
 
-
       // setTimeout(() => {
       //   setIsPlaying(true);
       //   setIsLoading(false);
@@ -60,27 +60,25 @@ function App(off) {
   };
   const toggleLoop = () => {
     setLoopMode((prev) => {
-      console.log("Previous loop mode:", prev)
-      if (prev === "off") return "all"
-      if (prev === "all") return "one"
-      return "off"
-
+      console.log("Previous loop mode:", prev);
+      if (prev === "off") return "all";
+      if (prev === "all") return "one";
+      return "off";
     });
-
-  }
+  };
 
   const playNext = () => {
     if (!songs || songs.length === 0 || currentIndex === null) return;
 
     if (isShuffle) {
-      setHistory((prev) => [ ...prev, currentIndex]);
+      setHistory((prev) => [...prev, currentIndex]);
 
       let nextIndex;
       do {
-        nextIndex = Math.floor(Math.random() * songs.length)
-console.log(isShuffle)
+        nextIndex = Math.floor(Math.random() * songs.length);
+        console.log(isShuffle);
       } while (nextIndex === currentIndex);
-      console.log(isShuffle)
+      console.log(isShuffle);
       setCurrentIndex(nextIndex);
       setCurrentSong(songs[nextIndex]);
       setIsPlaying(true);
@@ -108,7 +106,6 @@ console.log(isShuffle)
     if (!songs || songs.length === 0 || currentIndex === null) return;
 
     if (isShuffle && history.length > 0) {
-
       const prevHistory = [...history];
       const lastIndex = prevHistory.pop();
       setHistory(prevHistory);
@@ -135,8 +132,6 @@ console.log(isShuffle)
     setIsPlaying(true);
   };
 
-
-
   return (
     <div className=" bg-black text-white flex flex-col  ">
       {/* 
@@ -145,22 +140,24 @@ console.log(isShuffle)
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/" element={<ProtectedRoute>
-          <Layout>
-
-            <div
-              className={`flex-1  mb-24 flex flex-col  mt-20  ml-24 rounded-lg transition-all duration-300  bg-gradient-to- from-green-800 via-gray-900 to-gray-900  overflow-auto overflow-y-scroll
-  ${isSidebarOpen ? "ml-72 w-[calc(100%-16rem)]" : "ml-16 w-[calc(100%-4rem)]"}`}
-            >
-              <Outlet />
-            </div>
-          </Layout>
-        </ProtectedRoute>}>
-
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <div
+                  className={`flex-1  mb-24 flex flex-col  mt-20  ml-24 rounded-lg transition-all duration-300  bg-gradient-to- from-green-800 via-gray-900 to-gray-900  overflow-auto overflow-y-scroll
+  ${isSidebarOpen ? "ml-72 w-[calc(100%-16rem)]" : "ml-16 w-[calc(100%-4rem)]"} : ${isContentfeed} ? ? "ml-0 w-full"`}
+                >
+                  <Outlet />
+                </div>
+              </Layout>
+            </ProtectedRoute>
+          }
+        >
           <Route
             index
             element={
-
               <Home
                 searchQuery={searchQuery}
                 handlePlay={handlePlay}
@@ -176,7 +173,6 @@ console.log(isShuffle)
                 songs={songs}
                 setSongs={setSongs}
               />
-
             }
           />
           <Route
@@ -191,25 +187,34 @@ console.log(isShuffle)
             }
           />
           <Route path="content-feed" element={<Contentfeed />} />
-          <Route path="/search/:query" element={<SearchPage
-            onPlay={handlePlay}
-            currentSong={currentSong}
-            isPlaying={isPlaying}
-            showNowPlaying={showNowPlaying}
-            setShowNowPlaying={setShowNowPlaying} />} />
+          <Route
+            path="/search/:query"
+            element={
+              <SearchPage
+                onPlay={handlePlay}
+                currentSong={currentSong}
+                isPlaying={isPlaying}
+                showNowPlaying={showNowPlaying}
+                setShowNowPlaying={setShowNowPlaying}
+              />
+            }
+          />
         </Route>
       </Routes>
       {/* </div> */}
 
-
       {isAuthenticated && (
         <>
-          <div className='flex bg-black max-h-screen  text-white '>
-            <Sidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} setIsSidebarHovering={setIsSidebarHovering} />
-          </div>
+          {!isContentfeed && !isSearchpage && (
+            <div className="flex bg-black max-h-screen  text-white ">
+              <Sidebar
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
+                setIsSidebarHovering={setIsSidebarHovering}
+              />
+            </div>
+          )}
           <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
-
 
           <NowPlayingView
             currentSong={currentSong}
@@ -236,12 +241,10 @@ console.log(isShuffle)
             setIsShuffle={setIsShuffle}
             history={history}
             setHistory={setHistory}
-
           />
         </>
       )}
     </div>
-
   );
 }
 

@@ -48,6 +48,8 @@ function Navbar({ searchQuery, setSearchQuery }) {
               setSearchQuery(value);
               if (value.trim()) {
                 navigate(`/search/${encodeURIComponent(value)}`);
+              } else {
+                navigate("/")
               }
             }}
             className="w-full pl-8 relative bg-[#2A2A2A] text-white placeholder-gray-400 px-4 min-w-96 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-white "

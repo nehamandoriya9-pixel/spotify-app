@@ -98,7 +98,8 @@ function Home({
         <div
           className="mb-20 flex-col mt-20 rounded-lg transition-all duration-200 
           bg-gradient-to-b from-green-800 via-gray-900 to-gray-900 bg-fixed 
-          h-[calc(100vh-5rem)] overflow-y-scroll overflow-x-scroll"
+          h-[calc(100vh-5rem)] overflow-y-scroll overflow-x-hidden
+  overscroll-y-contain"
         >
           {/* LOADING SKELETON */}
           {isLoading ? (
@@ -140,7 +141,7 @@ function Home({
                         </button>
                       </div>
 
-                      <div className="flex space-x-4 overflow-x-scroll scrollbar-hide">
+                      <div className="flex items-stretch gap-4 overflow-x-auto overflow-y-hidden pb-12 scrollbar-hide">
                         {items.length > 0 ? (
                           items.slice(0, 10).map((song, index) => (
                             <AlbumItems
