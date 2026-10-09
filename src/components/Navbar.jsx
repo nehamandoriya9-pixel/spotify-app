@@ -31,7 +31,7 @@ function Navbar({ searchQuery, setSearchQuery }) {
 
   }
   return (
-    <nav className='bg-[#0f0f0f] w-full px-4 fixed z-30'>
+    <nav className="fixed top-0 left-0 z-50 w-full h-18 bg-[#0f0f0f] px-4">
       <div className=' w-full flex items-center max-w-md gap-6'>
         <a className='flex gap-6' href="/" style={{ color: 'white', marginRight: '15px', }}>
           <GrSpotify className='w-8 h-16  mx-px ' />

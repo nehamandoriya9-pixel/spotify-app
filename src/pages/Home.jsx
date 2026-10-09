@@ -87,7 +87,7 @@ function Home({
   }, [setSongs]);
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-black min-h-screen pt-1">
       <div
         className={`bg-black ${
           isSidebarOpen
@@ -111,7 +111,7 @@ function Home({
           ) : (
             <>
               {/* TOP TABS */}
-              <div className="flex flex-row items-start gap-2">
+              <div className="flex flex-row items-start gap-2 p-2">
                 <button className="bg-transparent text-white font-bold py-2 rounded-full focus:ring-2 focus:ring-white w-20">
                   All
                 </button>
